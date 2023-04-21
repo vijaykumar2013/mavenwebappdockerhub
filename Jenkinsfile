@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('code fetch') {
             steps {
-                git branch: 'main', url: 'https://github.com/vjtechie/mavenwebappsandbox.git'
+                git branch: 'main', url: 'https://github.com/vjtechie/mavenwebappdockerhub.git'
             }
         }
         stage('Build packages') {

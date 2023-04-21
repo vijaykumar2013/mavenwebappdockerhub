@@ -17,7 +17,7 @@ pipeline {
         }
          stage('Build') {
            steps {
-             sh 'docker build -t vijaysvk333/pipelienerepo .'
+             sh 'docker build -t vijaysvk333/pipelienerepo:v1.$BUILD_ID .'
            }
         }
          
@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Push') {
           steps {
-            sh 'docker push vijaysvk333/pipelienerepo'
+            sh 'docker push vijaysvk333/pipelienerepo:latest'
           }
         }
     }

@@ -1,35 +1,35 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID='361703069140'
-        AWS_DEFAULT_REGION='ap-south-1'
-        IMAGE_REPO_NAME='mavenwebapp'
-        REPOSITORY_URI = '361703069140.dkr.ecr.ap-south-1.amazonaws.com/mavenwebapp'
-        AWS_ACCESS_KEY_ID = "AKIAVINZO2XKOQAF6G6G"
-       AWS_SECRET_ACCESS_KEY = "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"
+        DOCKERHUB_CREDENTIALS = credentials('Docker_token')
   }
 
     stages {
         stage('code fetch') {
             steps {
-                git branch: 'main', url: 'https://github.com/vjtechie/newtestrepo.git'
+                git branch: 'main', url: 'https://github.com/vjtechie/mavenwebappsandbox.git'
             }
         }
-        stage('Build') {
+        stage('Build packages') {
             steps {
                 sh "mvn clean package"
             }
         }
+         stage('Build') {
+      steps {
+        sh 'docker build -t vijaysvk333/pipelienerepo .'
+      }
+    }
          
-         stage('push iamge ') {
-            steps {
-                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 361703069140.dkr.ecr.ap-south-1.amazonaws.com"
-                sh "docker build -t mavenwebapp ."
-                sh "docker tag mavenwebapp:latest 361703069140.dkr.ecr.ap-south-1.amazonaws.com/mavenwebapp:latest"
-                sh "docker push 361703069140.dkr.ecr.ap-south-1.amazonaws.com/mavenwebapp:latest"
-            }
-        }
-        
+        stage('Login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage('Push') {
+      steps {
+        sh 'docker push vijaysvk333/pipelienerepo'
+      }
+    }
     }
 }
-   

@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Push to DockerHub') {
           steps {
-            sh 'docker push vijaysvk333/pipelienerepo:v1.$BUILD_ID'
+            sh 'docker push vijaysvk333/pipelienerepo:latest'
           }
         }
     }

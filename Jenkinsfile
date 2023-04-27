@@ -31,20 +31,6 @@ pipeline {
             sh 'docker push vijaysvk333/pipelienerepo:v1.$BUILD_ID'
           }
         }
-        stage('Deploy App on k8s') {
-          steps {
-            sshagent(['k8s']) {
-              sh "scp -o StrictHostKeyChecking=no mavenwebapp.yaml ubuntu@182.18.184.69:/home/ubuntu"
-              script {
-                try{
-                  sh "ssh ubuntu@182.18.184.69 kubectl create -f ."
-                }catch(error){
-                    sh "ssh ubuntu@182.18.184.69 kubectl create -f ."
-            }
-}
-        }
-      
-    }
-    }
+       
     }
 }
